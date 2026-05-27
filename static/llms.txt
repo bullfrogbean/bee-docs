@@ -55,7 +55,7 @@ This is the documentation for [Swarm](https://www.ethswarm.org/) and its referen
 
 - [Host a Webpage](https://docs.ethswarm.org/docs/develop/host-your-website): Upload and serve static websites on Swarm
 - [Website Routing](https://docs.ethswarm.org/docs/develop/routing): Custom domains, ENS resolution, and routing configuration
-- [Run a Gateway](https://docs.ethswarm.org/docs/develop/gateway-proxy): Serve Swarm content over HTTP to regular browsers
+- [Run a Gateway](https://docs.ethswarm.org/docs/develop/run-a-gateway): Serve Swarm content over HTTP to regular browsers
 
 ## Build applications on Swarm
 
@@ -66,7 +66,7 @@ This is the documentation for [Swarm](https://www.ethswarm.org/) and its referen
 - [PSS Messaging (usage)](https://docs.ethswarm.org/docs/develop/tools-and-features/pss): Send messages through the Swarm network
 - [GSOC](https://docs.ethswarm.org/docs/develop/tools-and-features/gsoc): Graffiti SOC for pub/sub messaging patterns
 - [Add Access Control (usage)](https://docs.ethswarm.org/docs/develop/act): Encrypt content for specific recipients using ACT
-- [Gateway Proxy](https://docs.ethswarm.org/docs/develop/tools-and-features/gateway-proxy): Proxy for browser-based Swarm access
+- [Swarm Gateway](https://docs.ethswarm.org/docs/develop/tools-and-features/swarm-gateway): Proxy for browser-based Swarm access
 - [Developer Mode](https://docs.ethswarm.org/docs/develop/tools-and-features/bee-dev-mode): Run Bee without blockchain for local testing
 - [Starting a Private Network](https://docs.ethswarm.org/docs/develop/tools-and-features/starting-a-test-network): Multi-node test clusters
 - [Dynamic Content](https://docs.ethswarm.org/docs/develop/dynamic-content): Updatable content using feeds
