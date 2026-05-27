@@ -84,6 +84,42 @@ The script is **informational only** (exit 0) — it won't block the build.
 
 A few pages are intentionally excluded (intro/landing pages that only contain navigation cards). Their warnings are expected and can be ignored.
 
+## Link Checker
+
+The link checker scripts live in `scripts/` and are written in TypeScript. They require no additional installation beyond `npm ci` (which installs `tsx`).
+
+### Usage
+
+Run the checker against a local build:
+
+```bash
+npm run build          # build the site first
+npm run check:links    # check the local build
+```
+
+Or build and check in one step:
+
+```bash
+npm run build:check
+```
+
+Flags are passed through after `--`:
+
+```bash
+npm run check:links -- --mode local
+npm run check:links -- --mode live --site-domain docs.ethswarm.org
+npm run check:links -- --mode local --no-external --threads 16
+```
+
+| Flag | Description |
+|---|---|
+| `--mode local\|live` | Local build check (default) or live site crawl |
+| `--site-domain` | Your site's domain — auto-detected from `docusaurus.config.*` if omitted |
+| `--no-external` | Skip external URL checking (local mode only) |
+| `--threads N` | Number of concurrent HTTP threads (default: 8) |
+
+Reports are written to `link-reports/` (gitignored).
+
 ## Bumping Version
 
 Don't forget to find and replace the version number for the whole of the docs folder. 

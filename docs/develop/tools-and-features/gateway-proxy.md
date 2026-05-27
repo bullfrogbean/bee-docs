@@ -1,6 +1,7 @@
 ---
 title: Swarm Gateway
 id: swarm-gateway
+description: The standard tool for exposing a Bee node over HTTP, with optional authentication and upload filtering.
 ---
 
 The [Swarm Gateway](https://github.com/ethersphere/swarm-gateway) is the standard way to expose a Bee node over HTTP.

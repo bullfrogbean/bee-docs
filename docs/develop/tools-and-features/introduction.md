@@ -47,17 +47,17 @@ over the swarm.
 
 If you want your users to be able to access Swarm without running
 their own Bee node, for the time being you will need to make use of the [Gateway Proxy tool](https://github.com/ethersphere/gateway-proxy). Join us in the
-[#develop-on-swarm](https://discord.gg/C6dgqpxZkU) room in our
-[Discord Server](https://discord.gg/wdghaQsGq5) for more information on how to make your Swarm based applications accessible to everyone. 
+[#builders](https://discord.gg/8SMCfvm3kw) room in our
+[Discord Server](https://discord.gg/kHRyMNpw7t) for more information on how to make your Swarm based applications accessible to everyone. 
 
 
 
-### Bee Dev Mode
+### Local Development with bee-factory
 
-If you want to test out Swarm based applications without needing to spend real xBZZ, Bee dev mode is an invaluable tool. Learn how to set up Bee in [dev mode](./dev-mode.md) to begin prototyping your applications.
+If you want to test Swarm-based applications without spending real xBZZ, [bee-factory](./dev-mode.md) is the recommended tool. It starts a full local stack — 5 Bee nodes plus a local Anvil blockchain — with a single command. The older `bee dev` mode has been sunset in favour of bee-factory.
 
 
 ### Starting a Test Network
 
-While bee dev mode allows you to simulate running a single Bee node, setting up a [test network](./starting-a-test-network.md) will allow you to better simulate interactions between multiple nodes.
+While bee-factory already runs multiple nodes locally, setting up a [test network](./starting-a-test-network.md) gives you even greater control over simulating interactions between nodes in a more customised environment.
 

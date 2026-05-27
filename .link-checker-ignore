@@ -1,0 +1,7 @@
+# URLs to ignore in link checker
+# One URL pattern per line (substring matching, case-sensitive).
+# These URLs are still checked and reported separately, but don't block the check.
+# Lines starting with # are comments.
+
+# Example hash from desktop/publish-a-website.md — just an example of URL format
+https://api.gateway.ethswarm.org/bzz/bc9b942212421e2a19fe1ffdf0add641ae530923041ea8f549381747b14b2f2d/

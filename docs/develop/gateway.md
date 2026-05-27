@@ -1,11 +1,14 @@
 ---
 title: Run a Gateway
 id: run-a-gateway
+description: How to run your own Swarm HTTP gateway with swarm-gateway to serve Swarm content to browsers and HTTP clients.
 ---
+
+At this point you can build and deploy complete Swarm-hosted websites with working routing. This guide is an **operational step**: it shows how to make those sites accessible to the public web through an HTTP gateway, so that anyone with a browser can reach them without running their own Bee node.
 
 This guide explains how to use the [swarm-gateway](https://github.com/ethersphere/swarm-gateway) tool to set up your node in gateway mode. Running your node in gateway mode exposes it publicly, allowing access through any typical browser or http API.
 
-## Part 1 - Basic setup 
+## Part 1 — Basic setup
 
 :::info
 Historically, the main tool for running a Swarm HTTP gateway was [gateway-proxy](https://github.com/ethersphere/gateway-proxy), however it is planned to be deprecated in favor of [swarm-gateway](https://github.com/ethersphere/swarm-gateway).
@@ -58,13 +61,11 @@ This part of the guide does not cover setting up TLS, so your gateway will be ac
 
 ### 1. Configure DNS for your domain
 
-Create an A record in your DNS provider:
+Create an A record in your DNS provider pointing your domain to your server's IP address:
 
 ```text
 your-domain.example -> <your-server-ip>
 ```
-
-ADD SCREENSHOT 
 
 After DNS propagation, verify that the domain resolves to your server (this may take some time, to verify more quickly, try pinging from a different machine or VPS):
 
@@ -94,7 +95,7 @@ The output should list `bee-1` as an attached container.
 ### 3. Pull the gateway image
 
 ```bash
-docker pull ethersphere/swarm-gateway:0.1.3
+docker pull ethersphere/swarm-gateway:0.1.6
 ```
 
 ### 4. Run the gateway
@@ -109,7 +110,7 @@ docker run -d --restart unless-stopped \
   -e HOSTNAME="your-domain.example" \
   -e BEE_API_URL="http://bee-1:1633" \
   -e DATABASE_CONFIG="{}" \
-  ethersphere/swarm-gateway:0.1.3
+  ethersphere/swarm-gateway:0.1.6
 ```
 
 In this configuration, database-backed features such as subdomain rewrites and moderation are not configured.
@@ -128,52 +129,33 @@ Expected output:
 OK
 ```
 
-### 6. Test with uploaded content
+### 6. Test with existing content
 
-Upload a file using Bee:
+To confirm the gateway is correctly serving content from Swarm, request a reference that is already on the network. The following hash points to a small JSON file.
 
-```bash
-echo "hello swarm" > test.txt
-swarm-cli upload test.txt
-```
+Open it through the gateway in your browser:
 
-This will print a Swarm reference.
-
-Open the file through the gateway in your browser:
-
-```bash
-http://your-domain.example/bzz/<REFERENCE>/
+```text
+http://your-domain.example/bzz/f3f5e25c90824876c2468b9bdf0d842cd05dc5f0974681789b9729bc155c4f65/
 ```
 
 Or from the terminal:
 
 ```bash
-url -i http://your-domain.example/bzz/<REFERENCE>/
+curl -i http://your-domain.example/bzz/f3f5e25c90824876c2468b9bdf0d842cd05dc5f0974681789b9729bc155c4f65/
 ```
 
-The file contents should be returned. 
+Expected output:
 
-Example terminal output:
-
-```bash
-600/
-HTTP/1.1 200 OK
-X-Powered-By: Express
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: GET, POST, OPTIONS
-Access-Control-Allow-Headers: Content-Type, Authorization, swarm-postage-batch-id, swarm-deferred-upload
-accept-ranges: bytes
-access-control-expose-headers: Content-Disposition
-content-disposition: inline; filename="test.txt"
-content-type: text/plain; charset=utf-8
-date: Mon, 02 Feb 2026 10:21:39 GMT
-Content-Length: 12
-ETag: W/"c-5RZWYiFSSX7yHMJRTWWjxA9B9oo"
-Connection: keep-alive
-Keep-Alive: timeout=5
-
-hello swarm
+```json
+{
+  "octalmage.com": "bzz://45f0f1e13b70e2919e59fdc5bcf3a99bcbe19dc1be6ebdebe3f89794b77c19ab/",
+  "o8.is": "bzz://4cd43b1c0ebc257f79cc45ebd9774e1251e34f08026325c78ef2ca46972935cc/",
+  "dist.o8.is": "bzz://0890110b61109aee2b6f0d071cedce584868bb29dcb7e41b1c0388d6cf775ace/"
+}
 ```
+
+If the JSON is returned, your gateway is correctly fetching and serving content from Swarm. To serve your own content, upload a file or website through your Bee node (see the [Upload and Download](/docs/develop/upload-and-download) and [Host a Webpage](/docs/develop/host-your-website) guides) and use the resulting reference in place of the one above.
 
 ### 7. Optional: restrict uploads using authentication
 
@@ -251,7 +233,7 @@ docker run -d --restart unless-stopped \
   -e HOSTNAME="your-domain.example" \
   -e BEE_API_URL="http://bee-1:1633" \
   -e DATABASE_CONFIG="{}" \
-  ethersphere/swarm-gateway:0.1.3
+  ethersphere/swarm-gateway:0.1.6
 ```
 
 The gateway is now only accessible from within the Docker network.
@@ -269,12 +251,12 @@ cd ~/caddy
 Create a file named `Caddyfile`:
 
 ```bash
-vim Caddyfile
+nano Caddyfile
 ```
 
 Add the following configuration (replace the domain):
 
-```bash
+```caddy
 your-domain.example {
   reverse_proxy swarm-gateway:3000
 }
@@ -325,7 +307,7 @@ curl -I http://your-domain.example/health
 
 Example terminal output:
 
-```bash
+```text
 HTTP/1.1 308 Permanent Redirect
 Connection: close
 Location: https://your-domain.example/health
@@ -336,7 +318,11 @@ Date: Mon, 02 Feb 2026 10:31:17 GMT
 ## Part 3 — Options
 
 :::caution
-This section is under construction. Further guidance will be available in the near future. For the time being, please join the [#builders channel](https://discord.gg/udBg6ctH) on the Swarm Discord server.
+This section is under construction. Further guidance will be available in the near future. For the time being, please join the [#builders channel](https://discord.gg/kHRyMNpw7t) on the Swarm Discord server.
 :::
 
-You can find a [list](https://github.com/ethersphere/swarm-gateway/blob/main/README.md#overview) of all available options on the [Swarm Gateway README](github.com/ethersphere/swarm-gateway/blob/main/README.md) on GitHub. [Database options](https://github.com/ethersphere/swarm-gateway/blob/main/README.md#database) can also be set using the DATABASE_CONFIG environment variable.    
+You can find a [list](https://github.com/ethersphere/swarm-gateway/blob/main/README.md#overview) of all available options on the [Swarm Gateway README](https://github.com/ethersphere/swarm-gateway/blob/main/README.md) on GitHub. [Database options](https://github.com/ethersphere/swarm-gateway/blob/main/README.md#database) can also be set using the `DATABASE_CONFIG` environment variable.
+
+---
+
+**Next:** [Dynamic Content](/docs/develop/dynamic-content) — return to app development and learn how feeds add a mutable pointer layer on top of Swarm's immutable storage.
